@@ -13,7 +13,7 @@ export const MONSTER_SPAWNS: MonsterSpawn[] = [
     id: 'alien_1',
     name: 'Alien',
     path: '/models/monsters/Alien.glb',
-    position: new THREE.Vector3(20, 0, 15),
+    position: new THREE.Vector3(12, 0, 20),
     scale: 1.5
   },
   {
@@ -27,7 +27,7 @@ export const MONSTER_SPAWNS: MonsterSpawn[] = [
     id: 'armabee_evolved_1',
     name: 'Armabee Evolved',
     path: '/models/monsters/Armabee Evolved.glb',
-    position: new THREE.Vector3(30, 0, 5),
+    position: new THREE.Vector3(20, 0, 0),
     scale: 1.5
   },
   {

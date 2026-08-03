@@ -5,8 +5,8 @@ import { useGameStore } from "../../store/useGameStore";
 import * as THREE from "three";
 
 const MONSTERS = [
-  { name: "Alpaking", path: "/models/monsters/Alpaking.glb", position: [10, 0, 10] },
-  { name: "Alien", path: "/models/monsters/Alien.glb", position: [-10, 0, -10] },
+  { name: "Alpaking", path: "/models/monsters/Alpaking.glb", position: [8, 0, -2] },
+  { name: "Alien", path: "/models/monsters/Alien.glb", position: [-8, 0, -2] },
 ];
 
 export function Environment() {
@@ -28,11 +28,11 @@ export function Environment() {
       <DecorativeProp path="/models/environment/medieval/Path Straight.glb" position={[-4, 0, 0]} rotation={[0, Math.PI / 2, 0]} scale={2} />
       <DecorativeProp path="/models/environment/medieval/Path Straight.glb" position={[4, 0, 0]} rotation={[0, Math.PI / 2, 0]} scale={2} />
 
-      {/* Tightly clustered buildings */}
-      <DecorativeProp path="/models/environment/medieval/Fantasy House-BH2XHWUNmF.glb" position={[-8, 0, 5]} rotation={[0, Math.PI / 2, 0]} scale={2} />
-      <DecorativeProp path="/models/environment/medieval/Fantasy House-dcPho4SUA3.glb" position={[8, 0, 5]} rotation={[0, -Math.PI / 2, 0]} scale={2} />
-      <DecorativeProp path="/models/environment/medieval/Fantasy Inn.glb" position={[-8, 0, -5]} rotation={[0, Math.PI / 2, 0]} scale={2} />
-      <DecorativeProp path="/models/environment/medieval/Blacksmith.glb" position={[8, 0, -5]} rotation={[0, -Math.PI / 2, 0]} scale={2} />
+      {/* Tightly clustered buildings (Moved to -Z background so they don't block the camera) */}
+      <DecorativeProp path="/models/environment/medieval/Fantasy House-BH2XHWUNmF.glb" position={[-6, 0, -8]} rotation={[0, 0, 0]} scale={2} />
+      <DecorativeProp path="/models/environment/medieval/Fantasy House-dcPho4SUA3.glb" position={[6, 0, -8]} rotation={[0, 0, 0]} scale={2} />
+      <DecorativeProp path="/models/environment/medieval/Fantasy Inn.glb" position={[-12, 0, -12]} rotation={[0, Math.PI / 6, 0]} scale={2} />
+      <DecorativeProp path="/models/environment/medieval/Blacksmith.glb" position={[12, 0, -12]} rotation={[0, -Math.PI / 6, 0]} scale={2} />
 
       {/* Props around the well */}
       <DecorativeProp path="/models/environment/medieval/Market Stand.glb" position={[-4, 0, 3]} rotation={[0, Math.PI/4, 0]} scale={1.5} />
@@ -43,10 +43,12 @@ export function Environment() {
       <DecorativeProp path="/models/environment/medieval/Fence.glb" position={[-5, 0, -8]} rotation={[0, 0, 0]} scale={1.5} />
       <DecorativeProp path="/models/environment/medieval/Fence.glb" position={[5, 0, -8]} rotation={[0, 0, 0]} scale={1.5} />
 
-      {/* Trees framing the village */}
-      <DecorativeProp path="/models/environment/nature/Tree.glb" position={[-12, 0, -12]} scale={2} />
-      <DecorativeProp path="/models/environment/nature/Pine.glb" position={[12, 0, -12]} scale={2.5} />
-      <DecorativeProp path="/models/environment/nature/Tree-t9KbsfYdXz.glb" position={[-12, 0, 12]} scale={2} />
+      {/* Trees framing the village (Moved to background) */}
+      <DecorativeProp path="/models/environment/nature/Tree.glb" position={[-15, 0, -15]} scale={2} />
+      <DecorativeProp path="/models/environment/nature/Pine.glb" position={[15, 0, -15]} scale={2.5} />
+      <DecorativeProp path="/models/environment/nature/Tree-t9KbsfYdXz.glb" position={[-18, 0, -5]} scale={2} />
+      
+      {/* Small low-profile bushes in foreground are okay */}
       <DecorativeProp path="/models/environment/nature/Bush.glb" position={[-5, 0, 8]} scale={1.5} />
       <DecorativeProp path="/models/environment/nature/Bush with Flowers.glb" position={[5, 0, 8]} scale={1.5} />
       <DecorativeProp path="/models/environment/nature/Tall Grass.glb" position={[2, 0, 8]} scale={1} />

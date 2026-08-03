@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGameStore } from "../../store/useGameStore";
 
 export default function BattleUI() {
-  const { activeMonster, enemyMonster, setGameState, damageActiveMonster, damageEnemyMonster, healActiveMonster } = useGameStore();
+  const { activeMonster, enemyMonster, setGameState, damageActiveMonster, damageEnemyMonster, healActiveMonster, setPlayerAnimation, setEnemyAnimation } = useGameStore();
   const [dialogMessage, setDialogMessage] = useState<string | null>(null);
 
   const handleAttack = () => {
@@ -10,6 +10,8 @@ export default function BattleUI() {
     
     // Player Turn
     setDialogMessage(`${activeMonster.name} used Tackle!`);
+    setPlayerAnimation('Attack');
+    setTimeout(() => setPlayerAnimation('Idle'), 1000);
     
     setTimeout(() => {
       damageEnemyMonster(5);
@@ -24,6 +26,8 @@ export default function BattleUI() {
       // Enemy Turn
       setTimeout(() => {
         setDialogMessage(`Wild ${enemyMonster.name} used Scratch!`);
+        setEnemyAnimation('Attack');
+        setTimeout(() => setEnemyAnimation('Idle'), 1000);
         
         setTimeout(() => {
           damageActiveMonster(4);

@@ -15,6 +15,8 @@ interface GameStore {
   activeMonster: MonsterStats | null;
   enemyMonster: MonsterStats | null;
   characterModelPath: string | null;
+  playerAnimation: string;
+  enemyAnimation: string;
   
   // Actions
   setGameState: (state: GameState) => void;
@@ -22,6 +24,8 @@ interface GameStore {
   setActiveMonster: (monster: MonsterStats) => void;
   setEnemyMonster: (monster: MonsterStats | null) => void;
   setCharacterModelPath: (path: string) => void;
+  setPlayerAnimation: (anim: string) => void;
+  setEnemyAnimation: (anim: string) => void;
   damageActiveMonster: (amount: number) => void;
   healActiveMonster: (amount: number) => void;
   damageEnemyMonster: (amount: number) => void;
@@ -38,12 +42,16 @@ export const useGameStore = create<GameStore>((set) => ({
   },
   enemyMonster: null,
   characterModelPath: null, // Will be set randomly on mount
+  playerAnimation: 'Idle',
+  enemyAnimation: 'Idle',
 
   setGameState: (state) => set({ gameState: state }),
   setLocationName: (name) => set({ locationName: name }),
   setActiveMonster: (monster) => set({ activeMonster: monster }),
   setEnemyMonster: (monster) => set({ enemyMonster: monster }),
   setCharacterModelPath: (path) => set({ characterModelPath: path }),
+  setPlayerAnimation: (anim) => set({ playerAnimation: anim }),
+  setEnemyAnimation: (anim) => set({ enemyAnimation: anim }),
   
   damageActiveMonster: (amount) => 
     set((state) => {

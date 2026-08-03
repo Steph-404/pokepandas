@@ -1,7 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Environment as DreiEnvironment } from "@react-three/drei";
+import { useGLTF, Environment as DreiEnvironment, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
 import { useEffect } from "react";
+import { useGameStore } from "../../store/useGameStore";
 
 export function BattleScene() {
   const { camera } = useThree();
@@ -32,10 +33,10 @@ export function BattleScene() {
       <BattleProp path="/models/environment/nature/Tall Grass.glb" position={[3, 0, -5]} scale={1} />
 
       {/* Player Monster (right in front of camera) */}
-      <BattleMonster path="/models/monsters/Alpaking.glb" position={[0, 0, 3]} rotation={[0, Math.PI, 0]} isPlayer={true} />
+      <BattleMonster path="/models/monsters/Alpaking.glb" position={[-2, 0, 3]} rotation={[0, Math.PI, 0]} isPlayer={true} scale={0.8} />
       
       {/* Enemy Monster (farther back) */}
-      <BattleMonster path="/models/monsters/Alien.glb" position={[0, 0, -3]} rotation={[0, 0, 0]} isPlayer={false} />
+      <BattleMonster path="/models/monsters/Alien.glb" position={[2, 0, -3]} rotation={[0, 0, 0]} isPlayer={false} />
     </group>
   );
 }
@@ -46,8 +47,23 @@ function BattleProp({ path, position, scale = 1 }: { path: string; position: [nu
   return <primitive object={clone} position={position} scale={scale} castShadow receiveShadow />;
 }
 
-function BattleMonster({ path, position, rotation = [0, 0, 0], isPlayer = false }: { path: string; position: [number, number, number]; rotation?: [number, number, number]; isPlayer?: boolean }) {
-  const { scene } = useGLTF(path);
+function BattleMonster({ path, position, rotation = [0, 0, 0], scale, isPlayer = false }: { path: string; position: [number, number, number]; rotation?: [number, number, number]; scale?: number; isPlayer?: boolean }) {
+  const { scene, animations } = useGLTF(path);
+  const { actions } = useAnimations(animations, scene);
+  const playerAnimation = useGameStore((state) => state.playerAnimation);
+  const enemyAnimation = useGameStore((state) => state.enemyAnimation);
+
+  const currentAnim = isPlayer ? playerAnimation : enemyAnimation;
+
+  useEffect(() => {
+    if (actions && actions[currentAnim]) {
+      actions[currentAnim]?.reset().fadeIn(0.2).play();
+      return () => {
+        actions[currentAnim]?.fadeOut(0.2);
+      };
+    }
+  }, [currentAnim, actions]);
+
   // Do NOT clone skinned meshes in React Three Fiber to avoid invisibility bugs!
   return (
     <primitive 
@@ -56,7 +72,7 @@ function BattleMonster({ path, position, rotation = [0, 0, 0], isPlayer = false 
       rotation={rotation} 
       castShadow 
       receiveShadow 
-      scale={isPlayer ? 1.5 : 1.2}
+      scale={scale !== undefined ? scale : (isPlayer ? 1.5 : 1.2)}
     />
   );
 }

@@ -8,15 +8,15 @@ export function BattleScene() {
   const { camera } = useThree();
 
   useEffect(() => {
-    // Cinematic camera behind the player's monster
-    camera.position.set(0, 2, 7);
-    camera.lookAt(0, 1, -5);
+    // Cinematic camera behind the player's monster (moved back to Z=10 to avoid clipping)
+    camera.position.set(0, 4, 10);
+    camera.lookAt(0, 1, -2);
   }, [camera]);
 
   useFrame(() => {
     // Cinematic camera drift
     camera.position.x = Math.sin(performance.now() / 2000) * 0.5;
-    camera.lookAt(0, 1, -5);
+    camera.lookAt(0, 1, -2);
   });
 
   return (
@@ -32,11 +32,33 @@ export function BattleScene() {
       <BattleProp path="/models/environment/nature/Tall Grass.glb" position={[-2, 0, -3]} scale={1} />
       <BattleProp path="/models/environment/nature/Tall Grass.glb" position={[3, 0, -5]} scale={1} />
 
-      {/* Player Monster (right in front of camera) */}
-      <BattleMonster path="/models/monsters/Alpaking.glb" position={[-2, 0, 3]} rotation={[0, Math.PI, 0]} isPlayer={true} scale={0.8} />
+      {/* Cinematic Lighting */}
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 10, 5]} intensity={1.5} castShadow />
+      <pointLight position={[-5, 5, -5]} intensity={0.5} color="#ffa500" />
+
+      {/* Battle Platform */}
+      <mesh receiveShadow position={[0, -0.5, 0]}>
+        <cylinderGeometry args={[8, 8, 1, 32]} />
+        <meshStandardMaterial color="#8b5a2b" roughness={0.8} />
+      </mesh>
+
+      {/* Player Monster (Left) */}
+      <BattleMonster 
+        path="/models/monsters/Alpaking.glb" 
+        position={[-3, 0, 1]} 
+        rotation={[0, Math.PI, 0]} 
+        isPlayer={true} 
+        scale={0.6}
+      />
       
-      {/* Enemy Monster (farther back) */}
-      <BattleMonster path="/models/monsters/Alien.glb" position={[2, 0, -3]} rotation={[0, 0, 0]} isPlayer={false} />
+      {/* Enemy Monster (Right) */}
+      <BattleMonster 
+        path="/models/monsters/Alien.glb" 
+        position={[3, 0, -3]} 
+        rotation={[0, 0, 0]} 
+        isPlayer={false} 
+      />
     </group>
   );
 }

@@ -63,7 +63,12 @@ export const useGameStore = create<GameStore>((set) => ({
   playerRotation: 0,
   hasCompletedTutorial: false,
 
-  setGameState: (state) => set({ gameState: state }),
+  setGameState: (state) => set(() => {
+    if (state === 'BATTLE') {
+      return { gameState: state, battleState: 'PLAYER_INPUT' };
+    }
+    return { gameState: state };
+  }),
   setBattleState: (state) => set({ battleState: state }),
   setLocationName: (name) => set({ locationName: name }),
   completeTutorial: () => set((state) => {

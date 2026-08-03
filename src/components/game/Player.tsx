@@ -41,7 +41,7 @@ export function Player() {
       position={playerPosition}
       enabledRotations={[false, false, false]}
     >
-      <CapsuleCollider args={[0.5, 0.5]} position={[0, 1, 0]} />
+      <CapsuleCollider name="player" args={[0.5, 0.5]} position={[0, 1, 0]} />
       <group ref={playerGroup}>
         <PlayerModel bodyRef={bodyRef} />
       </group>

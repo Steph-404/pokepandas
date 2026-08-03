@@ -61,10 +61,10 @@ export function MainVillage() {
       <DecorativeProp path="/models/village/Fence.glb" position={[-5, 0, 20]} rotation={[0, Math.PI / 2, 0]} scale={1.5} />
 
       {/* Animals in Farm */}
-      <DecorativeProp path="/models/village/Cow.glb" position={[-15, 0, 25]} rotation={[0, Math.PI / 3, 0]} scale={1.5} isAnimal={true} />
-      <DecorativeProp path="/models/village/Cow.glb" position={[-5, 0, 28]} rotation={[0, -Math.PI / 4, 0]} scale={1.5} isAnimal={true} />
-      <DecorativeProp path="/models/village/Shiba Inu.glb" position={[-20, 0, 22]} rotation={[0, Math.PI, 0]} scale={1.2} isAnimal={true} />
-      <DecorativeProp path="/models/village/Fox.glb" position={[15, 0, 25]} rotation={[0, -Math.PI/2, 0]} scale={1.0} isAnimal={true} />
+      <DecorativeProp path="/models/village/Cow.glb" position={[-5, 0, 22]} rotation={[0, Math.PI / 3, 0]} scale={1.5} isAnimal={true} />
+      <DecorativeProp path="/models/village/Cow.glb" position={[0, 0, 26]} rotation={[0, -Math.PI / 4, 0]} scale={1.5} isAnimal={true} />
+      <DecorativeProp path="/models/village/Shiba Inu.glb" position={[-8, 0, 28]} rotation={[0, Math.PI, 0]} scale={1.2} isAnimal={true} />
+      <DecorativeProp path="/models/village/Fox.glb" position={[8, 0, 20]} rotation={[0, -Math.PI/2, 0]} scale={1.0} isAnimal={true} />
 
       {/* Nature (Heavily along the edges) */}
       <DecorativeProp path="/models/village/Pine.glb" position={[-30, 0, -25]} scale={2} />
@@ -87,7 +87,7 @@ export function MainVillage() {
       {/* Rocks and Bushes */}
       <DecorativeProp path="/models/village/Rock Medium.glb" position={[-18, 0, -18]} scale={1.5} />
       <DecorativeProp path="/models/village/Rock Medium.glb" position={[20, 0, -12]} scale={1.2} />
-      <DecorativeProp path="/models/village/Bush.glb" position={[-12, 0, 10]} scale={1.5} />
+      <DecorativeProp path="/models/village/Bush.glb" position={[-12, 0, 15]} scale={1.5} />
       <DecorativeProp path="/models/village/Bush.glb" position={[8, 0, -10]} scale={1.3} />
       <DecorativeProp path="/models/village/Flower Single.glb" position={[2, 0, 2]} scale={0.3} />
       <DecorativeProp path="/models/village/Flower Single.glb" position={[-2, 0, 2]} scale={0.3} />
@@ -190,12 +190,16 @@ export function MonsterEncounter({ path, position, name, scale = 1 }: { path: st
         args={[2, 3.0 * scale]} 
         position={[0, 1, 0]}
         sensor 
-        onIntersectionEnter={() => setIsNear(true)}
-        onIntersectionExit={() => setIsNear(false)}
+        onIntersectionEnter={(e) => {
+          if (e.colliderObject?.name === 'player' || e.rigidBodyObject?.name === 'player') setIsNear(true);
+        }}
+        onIntersectionExit={(e) => {
+          if (e.colliderObject?.name === 'player' || e.rigidBodyObject?.name === 'player') setIsNear(false);
+        }}
       />
 
       {isNear && (
-        <Html position={[0, 4, 0]} center>
+        <Html position={[0, 5, 0]} center zIndexRange={[100, 0]}>
           <div className="bg-[#fcf8e3] border-4 border-[#bca06b] rounded-lg p-2 shadow-lg flex flex-col items-center pointer-events-auto transform hover:scale-105 transition-transform cursor-pointer" onClick={handleChallenge}>
              <div className="text-[#4a3f35] font-bold text-sm mb-1">Wild {name}!</div>
              <button className="bg-[#7bc86c] text-white px-4 py-1 rounded border-2 border-[#5a9c4e] font-bold shadow-sm active:translate-y-0.5 active:shadow-none">

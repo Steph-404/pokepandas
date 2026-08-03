@@ -49,7 +49,7 @@ export function Pet() {
     
     const targetPos = playerPos.clone();
     targetPos.x -= offsetX;
-    targetPos.y += 1.0; 
+    targetPos.y = playerPos.y; 
     targetPos.z -= offsetZ;
 
     const currentPos = petRef.current.position.clone();

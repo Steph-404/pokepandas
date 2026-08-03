@@ -61,8 +61,8 @@ export function MainVillage() {
       <DecorativeProp path="/models/village/Fence.glb" position={[-5, 0, 20]} rotation={[0, Math.PI / 2, 0]} scale={1.5} />
 
       {/* Animals in Farm */}
-      <DecorativeProp path="/models/village/Cow.glb" position={[-12, 0, 25]} rotation={[0, Math.PI / 3, 0]} scale={1.5} isAnimal={true} />
-      <DecorativeProp path="/models/village/Cow.glb" position={[-8, 0, 27]} rotation={[0, -Math.PI / 4, 0]} scale={1.5} isAnimal={true} />
+      <DecorativeProp path="/models/village/Cow.glb" position={[-15, 0, 25]} rotation={[0, Math.PI / 3, 0]} scale={1.5} isAnimal={true} />
+      <DecorativeProp path="/models/village/Cow.glb" position={[-5, 0, 28]} rotation={[0, -Math.PI / 4, 0]} scale={1.5} isAnimal={true} />
       <DecorativeProp path="/models/village/Shiba Inu.glb" position={[-20, 0, 22]} rotation={[0, Math.PI, 0]} scale={1.2} isAnimal={true} />
       <DecorativeProp path="/models/village/Fox.glb" position={[15, 0, 25]} rotation={[0, -Math.PI/2, 0]} scale={1.0} isAnimal={true} />
 
@@ -184,10 +184,10 @@ export function MonsterEncounter({ path, position, name, scale = 1 }: { path: st
         <primitive object={clone} castShadow receiveShadow />
       </group>
       
-      <CylinderCollider args={[2, 1.0]} position={[0, 1, 0]} />
+      <CylinderCollider args={[2, 1.2 * scale]} position={[0, 1, 0]} />
 
       <CylinderCollider 
-        args={[2, 1.8]} 
+        args={[2, 3.0 * scale]} 
         position={[0, 1, 0]}
         sensor 
         onIntersectionEnter={() => setIsNear(true)}

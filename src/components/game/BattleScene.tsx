@@ -1,6 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Environment as DreiEnvironment, useAnimations } from "@react-three/drei";
-import * as THREE from "three";
+import { useGLTF, useAnimations } from "@react-three/drei";
 import { useEffect } from "react";
 import { useGameStore } from "../../store/useGameStore";
 

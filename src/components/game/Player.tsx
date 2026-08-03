@@ -17,7 +17,7 @@ const CHARACTER_MODELS = [
 export function Player() {
   const bodyRef = useRef<RapierRigidBody>(null);
   const playerGroup = useRef<THREE.Group>(null);
-  const [, get] = useKeyboardControls();
+  useKeyboardControls();
   
   const playerPosition = useGameStore(state => state.playerPosition);
   const setPlayerPosition = useGameStore(state => state.setPlayerPosition);
@@ -73,11 +73,11 @@ function PlayerModel({ bodyRef }: { bodyRef: React.RefObject<RapierRigidBody | n
     const currentAction = isMoving ? fallbackWalk : fallbackIdle;
 
     if (currentAction !== previousAction.current) {
-      if (previousAction.current && actions[previousAction.current]) {
-        actions[previousAction.current].fadeOut(0.2);
+      if (previousAction.current && actions && actions[previousAction.current]) {
+        actions[previousAction.current]?.fadeOut(0.2);
       }
-      if (currentAction && actions[currentAction]) {
-        actions[currentAction].reset().fadeIn(0.2).play();
+      if (currentAction && actions && actions[currentAction]) {
+        actions[currentAction]?.reset().fadeIn(0.2).play();
       }
       previousAction.current = currentAction;
     }
@@ -121,11 +121,17 @@ function CameraController({ bodyRef, playerGroup }: { bodyRef: React.RefObject<R
     }
 
     const playerPos = vec3(bodyRef.current.translation());
-    const cameraOffset = new THREE.Vector3(12, 6, 12);
+    const cameraOffset = new THREE.Vector3(15, 12, 15);
     const targetCameraPos = playerPos.clone().add(cameraOffset);
     
-    // Update global world position for the pet to track (mutating to avoid re-renders)
-    useGameStore.getState().playerWorldPosition.copy(playerPos);
+    // Update global world position and rotation for the pet to track (mutating/setting state without triggering rapid re-renders if possible, but here we just use it)
+    const store = useGameStore.getState();
+    store.playerWorldPosition.copy(playerPos);
+    
+    // We shouldn't call setPlayerRotation every frame as it causes React re-renders.
+    // Instead we can just mutate a ref or similar if we want. But since we need it in Pet.tsx,
+    // we can add it to the state directly. Wait, mutating state.playerRotation is fine if Pet polls it:
+    store.playerRotation = playerGroup.current.rotation.y;
 
     state.camera.position.lerp(targetCameraPos, 0.1);
     state.camera.lookAt(playerPos);

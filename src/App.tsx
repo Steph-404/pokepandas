@@ -1,20 +1,29 @@
+
+import Scene from './components/game/Scene';
+import BattleUI from './components/ui/BattleUI';
+import { OverworldUI } from './components/ui/OverworldUI';
+import { StartScreenUI } from './components/ui/StartScreenUI';
+import { useGameStore } from './store/useGameStore';
 import GameUI from "./components/ui/GameUI";
-import BattleUI from "./components/ui/BattleUI";
-import Scene from "./components/game/Scene";
-import { useGameStore } from "./store/useGameStore";
 
 function App() {
   const gameState = useGameStore((state) => state.gameState);
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-[#87CEEB]">
+    <div className="w-full h-screen bg-gray-900 relative overflow-hidden select-none">
       {/* 3D World */}
       <Scene />
       
       {/* 2D UI Overlays */}
-      {gameState === "OVERWORLD" && <GameUI />}
+      {gameState === 'START_SCREEN' && <StartScreenUI />}
+      {gameState === "OVERWORLD" && (
+        <>
+          <GameUI />
+          <OverworldUI />
+        </>
+      )}
       {gameState === "BATTLE" && <BattleUI />}
-    </main>
+    </div>
   );
 }
 

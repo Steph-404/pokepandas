@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useGLTF, Html } from "@react-three/drei";
+import { useState, useEffect } from "react";
+import { useGLTF, Html, useAnimations } from "@react-three/drei";
 import { RigidBody, CylinderCollider } from "@react-three/rapier";
 import { useGameStore } from "../../store/useGameStore";
 import * as THREE from "three";
@@ -78,11 +78,20 @@ function DecorativeProp({ path, position, rotation = [0, 0, 0], scale = 1 }: { p
 }
 
 function MonsterEncounter({ path, position, name }: { path: string; position: THREE.Vector3; name: string }) {
-  const { scene } = useGLTF(path);
+  const { scene, animations } = useGLTF(path);
+  const { actions } = useAnimations(animations, scene);
   const clone = scene.clone();
   const setGameState = useGameStore(state => state.setGameState);
   const setEnemyMonster = useGameStore(state => state.setEnemyMonster);
   const [isNear, setIsNear] = useState(false);
+
+  // Play Idle animation if available
+  useEffect(() => {
+    if (actions && Object.keys(actions).length > 0) {
+      const animName = actions["Idle"] ? "Idle" : Object.keys(actions)[0];
+      actions[animName]?.reset().fadeIn(0.2).play();
+    }
+  }, [actions]);
 
   const handleChallenge = () => {
     console.log(`Challenging ${name}!`);
@@ -101,14 +110,14 @@ function MonsterEncounter({ path, position, name }: { path: string; position: TH
       colliders={false} 
       position={position}
     >
-      <primitive object={clone} castShadow receiveShadow />
+      <primitive object={scene} castShadow receiveShadow />
       
-      {/* Explicit physical collider so player can't walk through, but small enough to allow close approach */}
-      <CylinderCollider args={[2, 1.5]} position={[0, 1, 0]} />
+      {/* Explicit physical collider so player can't walk through */}
+      <CylinderCollider args={[2, 1.0]} position={[0, 1, 0]} />
 
-      {/* Sensor for proximity detection */}
+      {/* Sensor for proximity detection - reduced radius to require getting very close */}
       <CylinderCollider 
-        args={[2, 3]} // Half-height, radius
+        args={[2, 1.8]} // Half-height, radius
         position={[0, 1, 0]}
         sensor 
         onIntersectionEnter={() => setIsNear(true)}

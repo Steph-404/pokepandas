@@ -98,22 +98,25 @@ function MonsterEncounter({ path, position, name }: { path: string; position: TH
   return (
     <RigidBody 
       type="fixed" 
-      colliders="cuboid" 
+      colliders={false} 
       position={position}
     >
       <primitive object={clone} castShadow receiveShadow />
       
+      {/* Explicit physical collider so player can't walk through, but small enough to allow close approach */}
+      <CylinderCollider args={[2, 1.5]} position={[0, 1, 0]} />
+
       {/* Sensor for proximity detection */}
       <CylinderCollider 
-        args={[2, 6]} // Half-height, radius
+        args={[2, 3]} // Half-height, radius
         position={[0, 1, 0]}
         sensor 
-        onIntersectionEnter={() => { console.log('Entered sensor!'); setIsNear(true); }}
-        onIntersectionExit={() => { console.log('Exited sensor!'); setIsNear(false); }}
+        onIntersectionEnter={() => setIsNear(true)}
+        onIntersectionExit={() => setIsNear(false)}
       />
 
       {isNear && (
-        <Html position={[0, 3, 0]} center>
+        <Html position={[0, 4, 0]} center>
           <div className="bg-[#fcf8e3] border-4 border-[#bca06b] rounded-lg p-2 shadow-lg flex flex-col items-center pointer-events-auto transform hover:scale-105 transition-transform cursor-pointer" onClick={handleChallenge}>
              <div className="text-[#4a3f35] font-bold text-sm mb-1">Wild {name}!</div>
              <button className="bg-[#7bc86c] text-white px-4 py-1 rounded border-2 border-[#5a9c4e] font-bold shadow-sm active:translate-y-0.5 active:shadow-none">

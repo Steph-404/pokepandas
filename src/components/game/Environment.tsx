@@ -88,8 +88,13 @@ function MonsterEncounter({ path, position, name }: { path: string; position: TH
   // Play Idle animation if available
   useEffect(() => {
     if (actions && Object.keys(actions).length > 0) {
-      const animName = actions["Idle"] ? "Idle" : Object.keys(actions)[0];
-      actions[animName]?.reset().fadeIn(0.2).play();
+      const idleKey = Object.keys(actions).find(key => key.toLowerCase().includes('idle'));
+      const animName = idleKey || Object.keys(actions)[0];
+      const action = actions[animName];
+      if (action) {
+        action.reset().fadeIn(0.5).play();
+        action.setEffectiveTimeScale(0.5); // Slow down the idle animation
+      }
     }
   }, [actions]);
 

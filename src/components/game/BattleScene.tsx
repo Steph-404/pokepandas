@@ -78,10 +78,23 @@ function BattleMonster({ path, position, rotation = [0, 0, 0], scale, isPlayer =
   const currentAnim = isPlayer ? playerAnimation : enemyAnimation;
 
   useEffect(() => {
-    if (actions && actions[currentAnim]) {
-      actions[currentAnim]?.reset().fadeIn(0.2).play();
+    if (!actions) return;
+    
+    // Find the closest matching animation key
+    let animKey = Object.keys(actions)[0]; // fallback
+    if (currentAnim === "Idle") {
+      animKey = Object.keys(actions).find(k => k.toLowerCase().includes('idle')) || animKey;
+    } else if (currentAnim === "Attack") {
+      animKey = Object.keys(actions).find(k => k.toLowerCase().includes('bite') || k.toLowerCase().includes('headbutt') || k.toLowerCase().includes('punch') || k.toLowerCase().includes('attack')) || animKey;
+    }
+
+    const action = actions[animKey];
+    if (action) {
+      action.reset().fadeIn(0.2).play();
+      // Slow down idle bobbing, play attack at normal speed
+      action.setEffectiveTimeScale(currentAnim === "Idle" ? 0.5 : 1.0);
       return () => {
-        actions[currentAnim]?.fadeOut(0.2);
+        action.fadeOut(0.2);
       };
     }
   }, [currentAnim, actions]);

@@ -87,7 +87,7 @@ function CameraController({ bodyRef, playerGroup }: { bodyRef: React.RefObject<R
     const velocity = bodyRef.current.linvel();
     
     FRONT.set(0, 0, (backward ? 1 : 0) - (forward ? 1 : 0));
-    RIGHT.set((right ? 1 : 0) - (left ? 1 : 0), 0, 0);
+    RIGHT.set((left ? 1 : 0) - (right ? 1 : 0), 0, 0);
     
     DIRECTION.subVectors(FRONT, RIGHT).normalize().multiplyScalar(SPEED);
     

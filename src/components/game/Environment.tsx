@@ -105,11 +105,11 @@ function MonsterEncounter({ path, position, name }: { path: string; position: TH
       
       {/* Sensor for proximity detection */}
       <CylinderCollider 
-        args={[2, 3]} // Half-height, radius
+        args={[2, 6]} // Half-height, radius
         position={[0, 1, 0]}
         sensor 
-        onIntersectionEnter={() => setIsNear(true)}
-        onIntersectionExit={() => setIsNear(false)}
+        onIntersectionEnter={() => { console.log('Entered sensor!'); setIsNear(true); }}
+        onIntersectionExit={() => { console.log('Exited sensor!'); setIsNear(false); }}
       />
 
       {isNear && (

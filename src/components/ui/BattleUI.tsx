@@ -2,14 +2,18 @@ import { useState } from "react";
 import { useGameStore } from "../../store/useGameStore";
 
 export default function BattleUI() {
-  const { activeMonster, enemyMonster, setGameState, damageActiveMonster, damageEnemyMonster, healActiveMonster, setPlayerAnimation, setEnemyAnimation } = useGameStore();
+  const { activeMonster, enemyMonster, setGameState, damageActiveMonster, damageEnemyMonster, healPlayer, setPlayerAnimation, setEnemyAnimation } = useGameStore();
   const [dialogMessage, setDialogMessage] = useState<string | null>(null);
+
+  const ATTACK_NAMES = ["Scratch", "Tackle", "Bite", "Headbutt"];
+  const getRandomAttack = () => ATTACK_NAMES[Math.floor(Math.random() * ATTACK_NAMES.length)];
 
   const handleAttack = () => {
     if (!activeMonster || !enemyMonster) return;
     
     // Player Turn
-    setDialogMessage(`${activeMonster.name} used Tackle!`);
+    const pAttack = getRandomAttack();
+    setDialogMessage(`${activeMonster.name} used ${pAttack}!`);
     setPlayerAnimation('Attack');
     setTimeout(() => setPlayerAnimation('Idle'), 1000);
     
@@ -19,13 +23,17 @@ export default function BattleUI() {
       // Check if enemy died
       if (enemyMonster.hp - 5 <= 0) {
         setDialogMessage(`Wild ${enemyMonster.name} fainted!`);
-        setTimeout(() => setGameState("OVERWORLD"), 2000);
+        setTimeout(() => {
+          healPlayer();
+          setGameState("OVERWORLD");
+        }, 2000);
         return;
       }
 
       // Enemy Turn
       setTimeout(() => {
-        setDialogMessage(`Wild ${enemyMonster.name} used Scratch!`);
+        const eAttack = getRandomAttack();
+        setDialogMessage(`Wild ${enemyMonster.name} used ${eAttack}!`);
         setEnemyAnimation('Attack');
         setTimeout(() => setEnemyAnimation('Idle'), 1000);
         
@@ -35,7 +43,7 @@ export default function BattleUI() {
           if (activeMonster.hp - 4 <= 0) {
             setDialogMessage(`${activeMonster.name} fainted! You blacked out...`);
             setTimeout(() => {
-               healActiveMonster(activeMonster.maxHp);
+               healPlayer();
                setGameState("OVERWORLD");
             }, 2000);
             return;
@@ -51,6 +59,7 @@ export default function BattleUI() {
   const handleFlee = () => {
     setDialogMessage("Got away safely!");
     setTimeout(() => {
+      healPlayer();
       setGameState("OVERWORLD");
     }, 1500);
   };

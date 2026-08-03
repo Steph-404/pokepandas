@@ -4,6 +4,7 @@ import { KeyboardControls, Sky, Environment as DreiEnvironment } from "@react-th
 import { Physics } from "@react-three/rapier";
 import { Player } from "./Player";
 import { Environment } from "./Environment";
+import { Pet } from "./Pet";
 import { BattleScene } from "./BattleScene";
 import { useGameStore } from "../../store/useGameStore";
 
@@ -39,6 +40,7 @@ export default function Scene() {
             {gameState === "OVERWORLD" ? (
               <Physics>
                 <Player />
+                <Pet />
                 <Environment />
               </Physics>
             ) : (

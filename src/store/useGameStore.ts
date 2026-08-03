@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import * as THREE from 'three';
 
 export type GameState = 'OVERWORLD' | 'BATTLE';
 
@@ -17,6 +18,8 @@ interface GameStore {
   characterModelPath: string | null;
   playerAnimation: string;
   enemyAnimation: string;
+  playerPosition: [number, number, number];
+  playerWorldPosition: THREE.Vector3;
   
   // Actions
   setGameState: (state: GameState) => void;
@@ -26,16 +29,19 @@ interface GameStore {
   setCharacterModelPath: (path: string) => void;
   setPlayerAnimation: (anim: string) => void;
   setEnemyAnimation: (anim: string) => void;
+  setPlayerPosition: (pos: [number, number, number]) => void;
+  setPlayerWorldPosition: (pos: THREE.Vector3) => void;
   damageActiveMonster: (amount: number) => void;
   healActiveMonster: (amount: number) => void;
   damageEnemyMonster: (amount: number) => void;
+  healPlayer: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
   gameState: 'OVERWORLD',
   locationName: 'Emberleaf Copse',
   activeMonster: {
-    name: 'Puddlepip',
+    name: 'Alpaking',
     level: 5,
     hp: 20,
     maxHp: 20,
@@ -44,6 +50,8 @@ export const useGameStore = create<GameStore>((set) => ({
   characterModelPath: null, // Will be set randomly on mount
   playerAnimation: 'Idle',
   enemyAnimation: 'Idle',
+  playerPosition: [0, 5, 5],
+  playerWorldPosition: new THREE.Vector3(0, 5, 5),
 
   setGameState: (state) => set({ gameState: state }),
   setLocationName: (name) => set({ locationName: name }),
@@ -52,6 +60,13 @@ export const useGameStore = create<GameStore>((set) => ({
   setCharacterModelPath: (path) => set({ characterModelPath: path }),
   setPlayerAnimation: (anim) => set({ playerAnimation: anim }),
   setEnemyAnimation: (anim) => set({ enemyAnimation: anim }),
+  setPlayerPosition: (pos) => set({ playerPosition: pos }),
+  setPlayerWorldPosition: (pos) => set({ playerWorldPosition: pos }),
+  
+  healPlayer: () => set((state) => {
+    if (!state.activeMonster) return state;
+    return { activeMonster: { ...state.activeMonster, hp: state.activeMonster.maxHp } };
+  }),
   
   damageActiveMonster: (amount) => 
     set((state) => {

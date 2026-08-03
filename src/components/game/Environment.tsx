@@ -5,7 +5,6 @@ import { useGameStore } from "../../store/useGameStore";
 import * as THREE from "three";
 
 const MONSTERS = [
-  { name: "Alpaking", path: "/models/monsters/Alpaking.glb", position: [8, 0, -2] },
   { name: "Alien", path: "/models/monsters/Alien.glb", position: [-8, 0, -2] },
 ];
 

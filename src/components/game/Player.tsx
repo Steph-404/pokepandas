@@ -19,13 +19,25 @@ export function Player() {
   const playerGroup = useRef<THREE.Group>(null);
   const [, get] = useKeyboardControls();
   
+  const playerPosition = useGameStore(state => state.playerPosition);
+  const setPlayerPosition = useGameStore(state => state.setPlayerPosition);
+
+  useEffect(() => {
+    return () => {
+      if (bodyRef.current) {
+        const pos = bodyRef.current.translation();
+        setPlayerPosition([pos.x, pos.y, pos.z]);
+      }
+    };
+  }, [setPlayerPosition]);
+
   return (
     <RigidBody
       ref={bodyRef}
       colliders={false}
       mass={1}
       type="dynamic"
-      position={[0, 5, 5]}
+      position={playerPosition}
       enabledRotations={[false, false, false]}
     >
       <CapsuleCollider args={[0.5, 0.5]} position={[0, 1, 0]} />
@@ -111,6 +123,9 @@ function CameraController({ bodyRef, playerGroup }: { bodyRef: React.RefObject<R
     const cameraOffset = new THREE.Vector3(12, 6, 12);
     const targetCameraPos = playerPos.clone().add(cameraOffset);
     
+    // Update global world position for the pet to track (mutating to avoid re-renders)
+    useGameStore.getState().playerWorldPosition.copy(playerPos);
+
     state.camera.position.lerp(targetCameraPos, 0.1);
     state.camera.lookAt(playerPos);
   });

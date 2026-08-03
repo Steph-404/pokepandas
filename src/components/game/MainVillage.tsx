@@ -67,22 +67,22 @@ export function MainVillage() {
       <DecorativeProp path="/models/village/Fox.glb" position={[8, 0, 20]} rotation={[0, -Math.PI/2, 0]} scale={1.0} isAnimal={true} />
 
       {/* Nature (Heavily along the edges) */}
-      <DecorativeProp path="/models/village/Pine.glb" position={[-30, 0, -25]} scale={2} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[-20, 0, -22]} scale={2.2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[-10, 0, -28]} scale={2.5} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[0, 0, -25]} scale={2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[12, 0, -26]} scale={2.2} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[25, 0, -22]} scale={1.8} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[35, 0, -10]} scale={2.5} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[30, 0, 5]} scale={2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[35, 0, 20]} scale={2.2} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[25, 0, 35]} scale={2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[10, 0, 38]} scale={2.5} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[-5, 0, 40]} scale={2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[-25, 0, 38]} scale={2.2} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[-40, 0, 25]} scale={2} />
-      <DecorativeProp path="/models/village/Pine.glb" position={[-40, 0, 5]} scale={2.5} />
-      <DecorativeProp path="/models/village/Tree.glb" position={[-35, 0, -10]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[-40, 0, -35]} scale={2} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[-30, 0, -32]} scale={2.2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[-15, 0, -38]} scale={2.5} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[0, 0, -35]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[15, 0, -36]} scale={2.2} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[35, 0, -32]} scale={1.8} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[45, 0, -15]} scale={2.5} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[45, 0, 5]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[45, 0, 25]} scale={2.2} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[35, 0, 40]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[15, 0, 45]} scale={2.5} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[-10, 0, 48]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[-35, 0, 45]} scale={2.2} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[-48, 0, 30]} scale={2} />
+      <DecorativeProp path="/models/village/Pine.glb" position={[-50, 0, 10]} scale={2.5} />
+      <DecorativeProp path="/models/village/Tree.glb" position={[-45, 0, -15]} scale={2} />
 
       {/* Rocks and Bushes */}
       <DecorativeProp path="/models/village/Rock Medium.glb" position={[-18, 0, -18]} scale={1.5} />

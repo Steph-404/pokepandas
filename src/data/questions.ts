@@ -67,6 +67,48 @@ export const QUESTION_BANK: Question[] = [
     options: ["df.plot(kind=\"bar\")", "df.bar_chart()", "plt.draw_bar(df)", "df.graph(\"bar\")"],
     correctIndex: 0,
     citation: "[cite: 5]"
+  },
+  {
+    id: "q9",
+    text: "How do you select only the 'Age' column from DataFrame `df`?",
+    options: ["df.Age", "df['Age']", "Both A and B", "df.select('Age')"],
+    correctIndex: 2,
+    citation: "[cite: 6]"
+  },
+  {
+    id: "q10",
+    text: "Which function creates a DataFrame from a dictionary?",
+    options: ["pd.DataFrame()", "pd.create_df()", "pd.from_dict()", "pd.make_dataframe()"],
+    correctIndex: 0,
+    citation: "[cite: 1]"
+  },
+  {
+    id: "q11",
+    text: "How do you sort a DataFrame by a column named 'Price' in descending order?",
+    options: ["df.sort('Price', down=True)", "df.sort_values('Price', ascending=False)", "df.order_by('Price', desc=True)", "df.sort_values('Price', desc=True)"],
+    correctIndex: 1,
+    citation: "[cite: 3]"
+  },
+  {
+    id: "q12",
+    text: "What does `df.describe()` do?",
+    options: ["Prints column names", "Provides summary statistics of numeric columns", "Shows the first 10 rows", "Describes the data types"],
+    correctIndex: 1,
+    citation: "[cite: 2]"
+  },
+  {
+    id: "q13",
+    text: "How do you reset the index of a DataFrame?",
+    options: ["df.reset_index()", "df.clear_index()", "df.new_index()", "df.drop_index()"],
+    correctIndex: 0,
+    citation: "[cite: 4]"
+  },
+  {
+    id: "q14",
+    text: "Which command reads a CSV file into a DataFrame?",
+    options: ["pd.read_csv()", "pd.load_csv()", "pd.open_csv()", "pd.parse_csv()"],
+    correctIndex: 0,
+    citation: "[cite: 1]"
   }
 ];
 

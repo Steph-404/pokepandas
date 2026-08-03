@@ -38,11 +38,22 @@ export function Pet() {
     targetPos.y += 1.5;
     targetPos.z += 1.5;
 
+    // Store previous position to calculate movement direction
+    const prevPos = petRef.current.position.clone();
+    
     // Lerp towards the target position smoothly
     petRef.current.position.lerp(targetPos, delta * 3);
     
-    // Make the pet look at the player
-    petRef.current.lookAt(playerWorldPosition);
+    // Calculate which way the pet just moved
+    const movementDir = petRef.current.position.clone().sub(prevPos);
+    
+    // If the pet is actively moving, make it look in the direction of movement
+    if (movementDir.lengthSq() > 0.0001) {
+      // Flatten the Y axis so the pet doesn't pitch up/down weirdly
+      movementDir.y = 0; 
+      const lookTarget = petRef.current.position.clone().add(movementDir);
+      petRef.current.lookAt(lookTarget);
+    }
     
     // Add a slight bobbing effect on top of the animation
     petRef.current.position.y += Math.sin(state.clock.elapsedTime * 3) * 0.005;

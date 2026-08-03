@@ -24,10 +24,11 @@ export function Player() {
 
   useEffect(() => {
     return () => {
-      if (bodyRef.current) {
-        const pos = bodyRef.current.translation();
-        setPlayerPosition([pos.x, pos.y, pos.z]);
-      }
+      // Do NOT read from bodyRef.current.translation() here because the 
+      // Rapier WASM object may already be destroyed on unmount, causing a crash.
+      // Instead, use the playerWorldPosition we've been tracking every frame.
+      const pos = useGameStore.getState().playerWorldPosition;
+      setPlayerPosition([pos.x, pos.y, pos.z]);
     };
   }, [setPlayerPosition]);
 
